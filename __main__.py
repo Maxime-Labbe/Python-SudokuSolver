@@ -8,4 +8,7 @@ if __name__ == "__main__":
     sudoku = r['newboard']['grids'][0]['value']
     solution = r['newboard']['grids'][0]['solution']
     sudoku = TransformFromLine(sudoku)
-    guess = solver(sudoku)
+    try :
+        solver(sudoku)
+    except :
+        print("Error: The sudoku is not solvable")

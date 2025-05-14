@@ -37,3 +37,16 @@ def searchLowestPossibility(possibleNumbers, size) :
                     lowest = len(possibleNumbers[i][j][k])
                     lowestIndex = [i,j,k]
     return lowestIndex
+
+def eliminateNakedPairs(possibleNumbers, size):
+    for i in range(size):
+        for j in range(size):
+            for k in range(9):
+                for m in range(k + 1, 9):
+                    if possibleNumbers[i][j][k] == possibleNumbers[i][j][m] and len(possibleNumbers[i][j][k]) == 2:
+                        for n in range(9):
+                            if n != k and n != m:
+                                for num in possibleNumbers[i][j][k]:
+                                    if num in possibleNumbers[i][j][n]:
+                                        possibleNumbers[i][j][n].remove(num)
+    return possibleNumbers

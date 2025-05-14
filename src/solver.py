@@ -2,7 +2,7 @@ import copy
 import time
 from src.transformations import TransformIntoLine, TransformIntoColumn, displayGrid
 from src.checks import VerifyEnd, checkDeadEnd, checkLoop
-from src.searches import searchPossibleNumbers, searchLowestPossibility, searchInCase
+from src.searches import searchPossibleNumbers, searchLowestPossibility, searchInCase, eliminateNakedPairs
 
 def replaceNumbers(sudoku, possibleNumbers, size) :
     newSudoku = copy.deepcopy(sudoku)
@@ -27,8 +27,8 @@ def simulate(sudoku, size, possibleNumbers, index, loops) :
         lineSudoku = TransformIntoLine(newSudoku)
         columnSudoku = TransformIntoColumn(newSudoku)
         newPossibleNumbers = searchPossibleNumbers(newSudoku, lineSudoku, columnSudoku, size)
-        newSudoku = replaceNumbers(newSudoku, newPossibleNumbers, size)
-        if (checkDeadEnd(newPossibleNumbers, size)) :
+        newPossibleNumbers = eliminateNakedPairs(newPossibleNumbers, size)
+        if (newSudoku == replaceNumbers(newSudoku,newPossibleNumbers,size) and checkDeadEnd(newPossibleNumbers, size)) :
             if index == 1 or index in loops:
                 possibleNumbers[lowestIndex[0]][lowestIndex[1]][lowestIndex[2]].remove(randomNumber)
                 newSudoku = copy.deepcopy(sudoku)
@@ -42,6 +42,8 @@ def simulate(sudoku, size, possibleNumbers, index, loops) :
             loops.append(index)
             newSudoku = simulate(newSudoku, size, newPossibleNumbers,index,loops)
             loops.remove(index)
+        else :
+            newSudoku = replaceNumbers(newSudoku, newPossibleNumbers, size)
     return newSudoku
 
 def solver(sudoku) :
@@ -55,6 +57,7 @@ def solver(sudoku) :
         lineSudoku = TransformIntoLine(sudoku)
         columnSudoku = TransformIntoColumn(sudoku)
         possibleNumbers = searchPossibleNumbers(sudoku, lineSudoku, columnSudoku, size)
+        possibleNumbers = eliminateNakedPairs(possibleNumbers, size)
         sudoku = replaceNumbers(sudoku, possibleNumbers, size)
         if (checkLoop(possibleNumbers, size)) :
             newSudoku = copy.deepcopy(sudoku)
