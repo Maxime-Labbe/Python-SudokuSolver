@@ -24,6 +24,16 @@ def TransformFromLine(sudokuLine) :
                 sudoku[i][j].append(sudokuLine[k // 3 + i * 3][k % 3 + j * 3])
     return sudoku
 
+def TransformFromColumn(sudokuColumn) :
+    sudoku = []
+    for i in range(3) :
+        sudoku.append([])
+        for j in range(3) :
+            sudoku[i].append([])
+            for k in range(9) :
+                sudoku[i][j].append(sudokuColumn[k // 3 + j * 3][k % 3 + i * 3])
+    return sudoku
+
 def displayGrid(sudoku,size) :
     print("-" * (size * 13 + 2))
     for i in range(size) :

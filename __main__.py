@@ -1,5 +1,5 @@
 import requests
-from src.transformations import TransformFromLine
+from src.transformations import TransformFromLine, TransformFromColumn
 from src.solver import solver
 
 
