@@ -4,9 +4,26 @@ This project is a sudoku solver, you just have to log it in and the script will 
 
 ## Table of Contents
 
+- [How It Works](#how-it-works)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
+
+## How It Works
+
+1. It transforms the sudoku into differents shapes to make it easier for the script for the next step.
+
+2. It searches all the possible numbers by doing simple search like 'Is this number in the square ?', 'Is this number in the line ?' and 'Is this number in the column ?', repetiting this for all the cell in the sudoku.
+
+3. By using the numbers found above, it process a script that uses a technic to eliminate numbers called (Naked Pairs).
+
+4. Then it replaces the empty cells where there is only one possibility that has been found and performs a last check after replacing all the numbers in a square, to see if a number can be placed at only one cell in the square.
+
+5. If the last step returned a sudoku that is different from the one that got in, then it repeat from step 1. Else, it goes to step 6.
+
+6. It picked the cell with the less possible numbers that can be placed in it and take the lowest number to try if it works like this, then it repeat itself from step 1 until there is nothing that can be placed in the sudoku anymore which makes go to step 7.
+
+7. If the sudoku is well completed, it returns the result. Else it goes back to the last time it picked a random number, it removes the number from the possibilities and try an other one. And finally goes back to the step 1.
 
 ## Installation
 
@@ -117,11 +134,11 @@ line_square_example = [
 
 #### Possible transformations
 
-    There is multiple transformations possible(knowing that the main function uses Line-Square) :
-    - Line-Square -> Column (TransformIntoColumn)
-    - Line-Square -> Line (TransformIntoLine)
-    - Column -> Line-Square (TransformFromColumn)
-    - Line -> Line-Square (TransformFromLine)
+There is multiple transformations possible(knowing that the main function uses Line-Square) :
+- Line-Square -> Column (TransformIntoColumn)
+- Line-Square -> Line (TransformIntoLine)
+- Column -> Line-Square (TransformFromColumn)
+- Line -> Line-Square (TransformFromLine)
 
 ## Project Structure
 
