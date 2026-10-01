@@ -37,6 +37,8 @@ def searchInCase(possibleNumbers, line, tab) :
 def searchPossibleNumbers(sudoku, lineSudoku, columnSudoku, size) :
     start = time.perf_counter()
     possibleNumbers = []
+    row_values = [set(row) for row in lineSudoku]
+    column_values = [set(col) for col in columnSudoku]
     for i in range(size) : 
         possibleNumbers.append([])
         for j in range(size):
@@ -48,7 +50,7 @@ def searchPossibleNumbers(sudoku, lineSudoku, columnSudoku, size) :
                         possibleNumbers[i][j][k].append(-1)
                         break
                     else :
-                        if (not (m + 1 in lineSudoku[i * 3 + k // 3]) and not (m + 1 in columnSudoku[j * 3 + k % 3]) and not (m + 1 in sudoku[i][j])) :
+                        if (not (m + 1 in row_values[i * 3 + k // 3]) and not (m + 1 in column_values[j * 3 + k % 3]) and not (m + 1 in sudoku[i][j])) :
                             possibleNumbers[i][j][k].append(m+1)
     _recordTiming("searchPossibleNumbers", start)
     return possibleNumbers
@@ -79,5 +81,5 @@ def eliminateNakedPairs(possibleNumbers, size):
                                 for num in possibleNumbers[i][j][k]:
                                     if num in possibleNumbers[i][j][n]:
                                         possibleNumbers[i][j][n].remove(num)
-    _recordTiming("eliminateNakedPairs", start)
+    _recordTiming("eliminateNakedPairs", start)    
     return possibleNumbers
